@@ -1,39 +1,48 @@
 services:
   - type: web
-    name: project-kp
-    runtime: node
-    plan: 0.5c-512mb
-    buildCommand: npm ci && npm run build
-    startCommand: npm start
-    healthCheckPath: /api/health
+    name: project-magang
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /up
     envVars:
-      - key: NODE_ENV
+      - key: APP_ENV
         value: production
-      - key: NODE_VERSION
-        value: 22.23.4
-      - key: DATABASE_URL
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        value: https://project-magang.onrender.com
+      - key: ASSET_URL
+        value: https://project-magang.onrender.com
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
         fromDatabase:
-          name: project-kp-db
+          name: project-magang-db
           property: connectionString
-      - key: R2_ACCOUNT_ID
-        sync: false
-      - key: R2_ACCESS_KEY_ID
-        sync: false
-      - key: R2_SECRET_ACCESS_KEY
-        sync: false
-      - key: R2_BUCKET_NAME
-        value: project-kp
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: CACHE_STORE
+        value: database
+      - key: FILESYSTEM_DISK
+        value: public
       - key: ADMIN_EMAIL
         sync: false
       - key: ADMIN_NAME
         value: Admin Support B2G
       - key: ADMIN_PASSWORD
         sync: false
-      - key: SESSION_SECRET
-        generateValue: true
+
 databases:
-  - name: project-kp-db
-    databaseName: b2g_dashboard
-    user: b2g
-    plan: 0.1c-256mb
-    postgresMajorVersion: '17'
+  - name: project-magang-db
+    databaseName: project_magang
+    user: project_magang
+    plan: free
+    postgresMajorVersion: "17"

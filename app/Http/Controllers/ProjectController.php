@@ -196,9 +196,9 @@ class ProjectController extends Controller
 
         foreach ($storagePaths as $storagePath) {
             try {
-                Storage::disk('r2')->delete($storagePath);
+                Storage::disk(config('filesystems.default'))->delete($storagePath);
             } catch (\Throwable $error) {
-                Log::warning('Failed to remove project document from R2.', ['path' => $storagePath, 'error' => $error->getMessage()]);
+                Log::warning('Failed to remove project document from storage.', ['path' => $storagePath, 'error' => $error->getMessage()]);
             }
         }
 

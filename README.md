@@ -27,4 +27,8 @@ Documents are limited to 10 MB and the file types accepted by the dashboard. Use
 
 ## Deployment
 
-Point the web server document root at `public/`, set production environment values, use a persistent database and private storage, and run `php artisan migrate --force` after deployment. Build assets with `npm run build`. Keep `.env` and credentials out of version control.
+The repository includes a Docker setup and Render Blueprint for the Laravel app. Connect this repository to Render and deploy the Blueprint from `render.yaml`. The container builds the frontend assets, serves Laravel from `public/`, and runs database migrations and the seeder at startup.
+
+The Blueprint uses Render Free resources for testing. Free web services can sleep and have ephemeral local files; free PostgreSQL databases expire after 30 days. Do not use this setup for production data. Use paid persistent resources before storing important project records or documents.
+
+For persistent private document storage, configure a Cloudflare R2 bucket, set `FILESYSTEM_DISK=r2`, and add `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, and `R2_BUCKET_NAME` as Render environment variables. Keep `.env` and credentials out of version control. Set `ADMIN_EMAIL` and a strong `ADMIN_PASSWORD` in the Render dashboard before logging in.
