@@ -51,7 +51,7 @@ export function Sidebar({ activeNav, onNavChange, onLogout }: SidebarProps) {
       <div className="flex items-center gap-3 px-4 py-5 border-b border-[#E5E5E5]">
         {!collapsed && (
           <div className="min-w-0">
-            <p className="text-sm font-bold text-[#1C1C1E] leading-tight truncate">B2Gov Portal</p>
+            <p className="text-sm font-bold text-[#1C1C1E] leading-tight truncate">SIMPUL Portal</p>
           </div>
         )}
         <button
